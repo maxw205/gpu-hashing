@@ -1,6 +1,11 @@
-#include <iostream>
+#include "hashing.h"
+
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::string input = "Hello, World!";
+    
+    unsigned int hash = simpleHash(input);
+    std::cout << "Hash of \"" << input << "\": " << hash << std::endl;
+
     return 0;
 }
