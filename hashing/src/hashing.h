@@ -1,4 +1,6 @@
-#pragma once
+// addition.h
+#ifndef ADDITION_H
+#define ADDITION_H
 
 #include <iostream>
 #include <openssl/sha.h>
@@ -8,6 +10,6 @@
 #include <cstring>
 #include <string>
 
-// Function to perform simple modular hashing
 unsigned int simpleHash(const std::string& input);
 
+#endif

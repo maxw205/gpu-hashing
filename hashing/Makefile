@@ -1,42 +1,52 @@
-SRC_PATH=src
-BUILD_DIR=build
+# Compiler settings
+CXX = g++
+NVCC = nvcc
+CXXFLAGS = -std=c++11
+NVCCFLAGS = -std=c++11
 
-LIB_PATH=$(CURDIR)/../lib
-GPUTK_LIB_PATH=$(LIB_PATH)/libgputk/lib
-GPUTK_SRC_PATH=$(LIB_PATH)/libgputk
-NVCC=nvcc
-CXX=g++
+# Name of the target executable
+TARGET = main
+# Path to the target executable
+TARGET_PATH = build/$(TARGET)
 
-CUDA_INCLUDE_PATH=/usr/local/cuda/include
-CUDA_FLAGS=-I $(GPUTK_SRC_PATH) -I $(CUDA_INCLUDE_PATH)
-CXX_FLAGS=-std=c++11 -I $(GPUTK_SRC_PATH) -I $(CUDA_INCLUDE_PATH)
+# Directory for source files
+SRC_DIR = src
+# Directory for build outputs
+BUILD_DIR = build
 
-OBJECTS := $(SOURCES:%=$(BUILD_DIR)/%.o)
-CUDA_SOURCES := $(wildcard $(SRC_PATH)/*.cu)
-CUDA_OBJECTS := $(CUDA_SOURCES:%=$(BUILD_DIR)/%.o)
+# Source files
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
+CU_SRC = $(wildcard $(SRC_DIR)/*.cu)
 
-TEST_EXE=$(BUILD_DIR)/main_test
+# Object files
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o) $(CU_SRC:$(SRC_DIR)/%.cu=$(BUILD_DIR)/%.o)
 
-# Testing Main
-test: $(BUILD_DIR) $(TEST_EXE)
+# Header files
+HEADERS = $(wildcard $(SRC_DIR)/*.h)
 
-$(TEST_EXE): $(BUILD_DIR)/main_test.o $(OBJECTS) $(CUDA_OBJECTS)
-	$(NVCC) $(CUDA_FLAGS) -o $@ $^ $(LIBS)
+# Default rule
+all: $(TARGET_PATH)
 
-# Testing object file
-$(BUILD_DIR)/main_test.o: $(SRC_PATH)/main_test.cpp
-	$(CXX) $(CXX_FLAGS) -c $< -o $@
-
-# C++ files
-$(BUILD_DIR)/%.cpp.o: %.cpp
-	$(CXX) $(CXX_FLAGS) $(CUDA_FLAGS) -g -c $< -o $@
-
-# CUDA files
-$(BUILD_DIR)/%.cu.o: %.cu
-	$(NVCC) $(CUDA_FLAGS) -lineinfo -c $< -o $@
-
+# Rule to create the build directory
 $(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)/src
+	@mkdir -p $(BUILD_DIR)
 
+# Rule to link the program
+$(TARGET_PATH): $(OBJ)
+	$(NVCC) $(NVCCFLAGS) -o $@ $(OBJ)
+
+# Rule to compile C++ source files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Rule to compile CUDA source files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cu $(HEADERS)
+	@mkdir -p $(@D)
+	$(NVCC) $(NVCCFLAGS) -c $< -o $@
+
+# Clean rule
 clean:
 	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean

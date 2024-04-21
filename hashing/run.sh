@@ -1,8 +1,12 @@
-make test
+#!/bin/bash
 
-# uncomment the loading if running on lab machine
-# module load cuda/12.2
+# Build the C++ program
+make
 
-./build/main_test
-
-# module unload cuda/12.2
+# Check if compilation was successful
+if [ $? -eq 0 ]; then
+    # Run the program
+    ./build/main
+else
+    echo "Compilation failed. Program cannot be run."
+fi
