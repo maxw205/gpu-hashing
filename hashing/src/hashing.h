@@ -9,7 +9,9 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include <fstream>
+#include <sstream>
 
-unsigned int simpleHash(const std::string& input);
+unsigned int simpleHash(const char* input);
 
 #endif
