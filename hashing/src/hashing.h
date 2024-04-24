@@ -13,5 +13,6 @@
 #include <sstream>
 
 unsigned int simpleHash(const char* input);
+unsigned int fnv1_hash(const char* str);
 
 #endif
