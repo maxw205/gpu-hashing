@@ -2,6 +2,7 @@
 
 extern void computeHash(const char *input, int len, unsigned int &result);
 extern void computeFNV1Hash(const char *input, int len, unsigned int &result);
+extern void computeJenkinsHash(const char *input, int len, unsigned int &result);
 
 
 int main(int argc, char* argv[]) {
@@ -33,7 +34,7 @@ int main(int argc, char* argv[]) {
 
     // Timing GPU hash computation
     auto startGPU = std::chrono::high_resolution_clock::now();
-    computeFNV1Hash(input.c_str(), input.length(), hashGPUResult);
+    computeJenkinsHash(input.c_str(), input.length(), hashGPUResult);
     auto endGPU = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> gpuTime = endGPU - startGPU;
 
@@ -42,7 +43,7 @@ int main(int argc, char* argv[]) {
 
     // Timing CPU hash computation
     auto startCPU = std::chrono::high_resolution_clock::now();
-    hashCPUResult = fnv1_hash(input.c_str());
+    hashCPUResult = jenkins_one_at_a_time_hash(input.c_str());
     auto endCPU = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> cpuTime = endCPU - startCPU;
 
