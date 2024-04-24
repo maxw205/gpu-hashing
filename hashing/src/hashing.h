@@ -3,7 +3,7 @@
 #define ADDITION_H
 
 #include <iostream>
-#include <openssl/sha.h>
+//#include <openssl/sha.h>
 #include <iostream>
 #include <chrono>
 #include <vector>
