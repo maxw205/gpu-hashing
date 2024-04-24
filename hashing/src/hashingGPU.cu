@@ -28,7 +28,7 @@ extern void computeHash(const char *input, int len, unsigned int &result) {
     cudaMemcpy(&result, d_hash, sizeof(unsigned int), cudaMemcpyDeviceToHost);
     
     result %= 1023;  // Modulo operation as in the CPU version
-    std::cout << len;
+
 
     cudaFree(d_input);
     cudaFree(d_hash);
