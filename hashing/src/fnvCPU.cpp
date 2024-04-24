@@ -1,5 +1,5 @@
 #include <cstring>  // For strlen
-#include "hahing.h"
+#include "hashing.h"
 
 unsigned int fnv1_hash(const char* str) {
     const unsigned int FNV_prime = 0x01000193; // 16777619

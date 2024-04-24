@@ -17,7 +17,7 @@ __global__ void computeFNV1HashKernel(const char *input, int len, unsigned int *
     }
 }
 
-extern "C" void computeFNV1Hash(const char *input, int len, unsigned int &result) {
+extern void computeFNV1Hash(const char *input, int len, unsigned int &result) {
     char *d_input;
     unsigned int *d_hash;
     unsigned int zero = 0;
