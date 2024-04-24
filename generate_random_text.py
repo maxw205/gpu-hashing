@@ -15,4 +15,4 @@ def generate_random_text(size_in_mb, filename):
             file.write(''.join(random.choice(chars) for _ in range(1024)))  # Writing 1024 chars at a time
 
 # Usage
-generate_random_text(100, 'random_text.txt')
+generate_random_text(100, 'random_text6.txt')

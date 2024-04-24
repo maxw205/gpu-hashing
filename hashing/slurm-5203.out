@@ -1,0 +1,8 @@
+g++ -std=c++11 -c src/hashingCPU.cpp -o build/hashingCPU.o
+g++ -std=c++11 -c src/main_test.cpp -o build/main_test.o
+nvcc -std=c++11 -c src/hashingGPU.cu -o build/hashingGPU.o
+nvcc -std=c++11 -o build/main build/hashingCPU.o build/main_test.o build/hashingGPU.o
+57794561Hash of the file (GPU): 0
+Time taken by GPU: 2.70681 ms
+Hash of the file (CPU): 276
+Time taken by CPU: 100.353 ms
