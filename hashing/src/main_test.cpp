@@ -11,7 +11,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Open the file using the filename passed from command line
     std::ifstream file(argv[1]);
     if (!file.is_open()) {
         std::cerr << "Failed to open the file: " << argv[1] << std::endl;
@@ -19,11 +18,10 @@ int main(int argc, char* argv[]) {
     }
 
     std::stringstream buffer;
-    buffer << file.rdbuf(); // Read the whole file into a string stream
-    std::string input = buffer.str(); // Convert to string
+    buffer << file.rdbuf(); 
+    std::string input = buffer.str(); 
     file.close();
 
-    // Ensure input is not empty
     if (input.empty()) {
         std::cerr << "File is empty or reading failed." << std::endl;
         return 1;

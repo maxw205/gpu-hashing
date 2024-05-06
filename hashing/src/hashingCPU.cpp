@@ -1,4 +1,3 @@
-// addition.cpp
 #include "hashing.h"
 
 unsigned int simpleHash(const char* input) {

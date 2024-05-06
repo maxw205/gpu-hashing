@@ -11,7 +11,7 @@ __device__ unsigned int jenkins_hash_step(unsigned int previousHash, char c) {
 __global__ void computeJenkinsHashKernel(const char *input, int len, unsigned int *hash) {
     int index = threadIdx.x + blockIdx.x * blockDim.x;
     if (index < len) {
-        unsigned int localHash = jenkins_hash_step(0, input[index]);  // Initialize local hash for each character
+        unsigned int localHash = jenkins_hash_step(0, input[index]);
         atomicAdd(hash, localHash);
     }
 }
@@ -33,7 +33,7 @@ extern void computeJenkinsHash(const char *input, int len, unsigned int &result)
 
     cudaMemcpy(&result, d_hash, sizeof(unsigned int), cudaMemcpyDeviceToHost);
 
-    // Apply final Jenkins mix steps without modulo normalization
+    // perform final operation for jenkins
     result += (result << 3);
     result ^= (result >> 11);
     result += (result << 15);

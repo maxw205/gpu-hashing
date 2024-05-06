@@ -1,4 +1,3 @@
-// addition.h
 #ifndef ADDITION_H
 #define ADDITION_H
 

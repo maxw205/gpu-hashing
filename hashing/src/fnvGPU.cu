@@ -1,7 +1,7 @@
 #include <iostream>
 
 __device__ unsigned int fnv1_hash(unsigned int previousHash, char c) {
-    const unsigned int FNV_prime = 0x01000193; // 16777619
+    const unsigned int FNV_prime = 0x01000193; 
     unsigned int hash = previousHash;
     hash *= FNV_prime;
     hash ^= (unsigned int)c;
@@ -9,7 +9,7 @@ __device__ unsigned int fnv1_hash(unsigned int previousHash, char c) {
 }
 
 __global__ void computeFNV1HashKernel(const char *input, int len, unsigned int *hash) {
-    const unsigned int FNV_offset_basis = 0x811C9DC5; // 2166136261
+    const unsigned int FNV_offset_basis = 0x811C9DC5; 
     int index = threadIdx.x + blockIdx.x * blockDim.x;
     if (index < len) {
         unsigned int localHash = fnv1_hash(FNV_offset_basis, input[index]);
@@ -34,8 +34,7 @@ extern void computeFNV1Hash(const char *input, int len, unsigned int &result) {
 
     cudaMemcpy(&result, d_hash, sizeof(unsigned int), cudaMemcpyDeviceToHost);
 
-    // Normalize the result as per application's requirement, might adjust based on use case
-    result %= 1023;  // Example modulo for normalization, adjust if needed
+    result %= 1023;
 
     cudaFree(d_input);
     cudaFree(d_hash);
